@@ -1,11 +1,11 @@
 package com.example.backend.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
-import java.time.LocalDateTime;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +18,12 @@ import com.example.backend.entity.Order;
 import com.example.backend.entity.OrderItem;
 import com.example.backend.entity.Product;
 import com.example.backend.entity.User;
+import com.example.backend.exception.InsufficientStockException;
+import com.example.backend.exception.ResourceAlreadyExistsException;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.repository.OrderRepository;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.CurrentUserService;
-import com.example.backend.exception.InsufficientStockException;
-import com.example.backend.exception.ResourceAlreadyExistsException;
 
 
 @Service
@@ -79,7 +79,7 @@ public class OrderService {
       int requestedQuantity = itemRequest.getQuantity();
       int availableQuantity = product.getQuantity();
 
-      if (requestedQuantity > availableQuantity) {
+      if (requestedQuantity >= availableQuantity) {
         throw new InsufficientStockException(
             "Requested quantity must be less than available quantity for product: "
                 + product.getName());
