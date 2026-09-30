@@ -30,6 +30,12 @@ public class TenantAccessService {
           "User is not associated with a tenant");
     }
 
+    if (!userTenant.isActive()) {
+      throw new AccessDeniedException(
+          "Tenant is inactive");
+    }
+
+    //tenant isolation
     if (!userTenant.getDomain().equalsIgnoreCase(tenantDomain)) {
       throw new AccessDeniedException(
           "You do not have access to this tenant");

@@ -1,0 +1,51 @@
+.favorite-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #777;
+
+  font-size: 16px;
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.favorite-button:hover:not(:disabled) {
+  color: #111;
+  border-color: #bbb;
+  background: #f7f7f7;
+}
+
+.favorite-button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.favorite-button.favorite-active {
+  color: #e53935;
+  border-color: #e53935;
+  background: #fff5f5;
+}
+
+.favorite-button.favorite-active:hover:not(:disabled) {
+  color: #c62828;
+  border-color: #c62828;
+  background: #ffebeb;
+}
+
+.favorite-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

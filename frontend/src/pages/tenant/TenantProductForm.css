@@ -1,0 +1,395 @@
+.tenant-product-form-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.tenant-product-form-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.tenant-product-form-back-link:hover {
+  color: #111;
+}
+
+.tenant-product-form-back-link svg {
+  font-size: 12px;
+}
+
+.tenant-product-form-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.tenant-product-form-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fafafa;
+  color: #333;
+}
+
+.tenant-product-form-icon svg {
+  font-size: 18px;
+}
+
+.tenant-product-form-eyebrow {
+  margin: 0 0 7px;
+  color: #777;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.tenant-product-form-header h1 {
+  margin: 0;
+  color: #111;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.tenant-product-form-header p:last-child {
+  margin: 7px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-product-form-header strong {
+  color: #333;
+}
+
+.tenant-product-form {
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.tenant-product-form-section {
+  padding: 28px;
+}
+
+.tenant-product-form-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tenant-product-form-section-heading h2 {
+  margin: 0;
+  color: #222;
+  font-size: 19px;
+}
+
+.tenant-product-form-section-heading span {
+  color: #999;
+  font-size: 12px;
+}
+
+.tenant-product-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.tenant-product-form-field {
+  min-width: 0;
+}
+
+.tenant-product-form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.tenant-product-form-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tenant-product-form-field input,
+.tenant-product-form-field textarea,
+.tenant-product-form-field select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d8d8d8;
+  border-radius: 7px;
+  background: #fff;
+  color: #222;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tenant-product-form-field input,
+.tenant-product-form-field select {
+  height: 44px;
+  padding: 0 13px;
+}
+
+.tenant-product-form-field textarea {
+  min-height: 120px;
+  padding: 12px 13px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.tenant-product-form-field input::placeholder,
+.tenant-product-form-field textarea::placeholder {
+  color: #aaa;
+}
+
+.tenant-product-form-field input:hover,
+.tenant-product-form-field textarea:hover,
+.tenant-product-form-field select:hover {
+  border-color: #bbb;
+}
+
+.tenant-product-form-field input:focus,
+.tenant-product-form-field textarea:focus,
+.tenant-product-form-field select:focus {
+  border-color: #555;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.tenant-product-input-prefix {
+  position: relative;
+}
+
+.tenant-product-input-prefix span {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  color: #777;
+  font-size: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.tenant-product-input-prefix input {
+  padding-left: 29px;
+}
+
+.tenant-product-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 28px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.tenant-product-cancel-button,
+.tenant-product-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 0 17px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tenant-product-cancel-button {
+  border: 1px solid #d8d8d8;
+  background: #fff;
+  color: #444;
+}
+
+.tenant-product-cancel-button:hover {
+  background: #f5f5f5;
+}
+
+.tenant-product-submit-button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.tenant-product-submit-button:hover:not(:disabled) {
+  background: #333;
+}
+
+.tenant-product-submit-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tenant-product-submit-button svg {
+  font-size: 12px;
+}
+
+.tenant-product-form-error {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid #f0d0d0;
+  border-radius: 7px;
+  background: #fff7f7;
+  color: #b3261e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tenant-product-form-error strong {
+  font-size: 13px;
+}
+
+.tenant-product-form-warning {
+  padding: 30px;
+  border: 1px dashed #ddd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.tenant-product-form-warning h2 {
+  margin: 0;
+  color: #222;
+  font-size: 20px;
+}
+
+.tenant-product-form-warning p {
+  margin: 9px 0 18px;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-product-form-warning a {
+  display: inline-flex;
+  padding: 10px 15px;
+  border-radius: 7px;
+  background: #111;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tenant-product-form-state {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.tenant-product-form-state p {
+  margin: 10px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-product-form-state h2 {
+  margin: 14px 0 0;
+  color: #222;
+}
+
+.tenant-product-form-state-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: #555;
+}
+
+.tenant-product-form-loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e5e5;
+  border-top-color: #111;
+  border-radius: 50%;
+  animation: tenant-product-form-spin 0.8s linear infinite;
+}
+
+@keyframes tenant-product-form-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 650px) {
+  .tenant-product-form-page {
+    padding: 32px 16px 48px;
+  }
+
+  .tenant-product-form-header h1 {
+    font-size: 28px;
+  }
+
+  .tenant-product-form-section {
+    padding: 22px 18px;
+  }
+
+  .tenant-product-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tenant-product-form-field.full-width {
+    grid-column: auto;
+  }
+
+  .tenant-product-form-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tenant-product-form-actions {
+    padding: 16px 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .tenant-product-form-header {
+    align-items: flex-start;
+  }
+
+  .tenant-product-form-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .tenant-product-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .tenant-product-cancel-button,
+  .tenant-product-submit-button {
+    width: 100%;
+  }
+}

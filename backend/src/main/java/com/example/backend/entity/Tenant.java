@@ -20,4 +20,7 @@ public class Tenant {
 
     @Column(nullable = false, unique = true)
     private String domain;
+
+    @Column(nullable = false)
+    private boolean isActive = true;
 }

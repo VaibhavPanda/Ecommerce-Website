@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+//jwt -> DB user fetch then preserve the authentication in SecurityContextHolder
 @Service
 public class CurrentUserService {
 
@@ -16,6 +17,7 @@ public class CurrentUserService {
   }
 
   public User getCurrentUser() {
+
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

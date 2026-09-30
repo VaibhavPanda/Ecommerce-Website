@@ -1,0 +1,299 @@
+.products-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 44px 24px 60px;
+}
+
+.products-header {
+  margin-bottom: 28px;
+}
+
+.products-eyebrow {
+  margin: 0 0 8px;
+
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.products-header h1 {
+  margin: 0;
+
+  color: #111;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.products-subtitle {
+  margin: 10px 0 0;
+
+  color: #777;
+  font-size: 15px;
+}
+
+.product-filters {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.product-filters .search-bar {
+  flex: 1;
+}
+
+.product-filters .category-filter {
+  flex-shrink: 0;
+}
+
+.products-result-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 24px;
+  margin-bottom: 20px;
+
+  color: #777;
+  font-size: 14px;
+}
+
+.clear-filters {
+  border: none;
+  padding: 0;
+
+  background: transparent;
+  color: #111;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.clear-filters:hover {
+  text-decoration: underline;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.products-state {
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.products-state p {
+  margin: 8px 0 0;
+
+  color: #777;
+  line-height: 1.5;
+}
+
+.products-state h2 {
+  margin: 14px 0 0;
+
+  color: #222;
+  font-size: 21px;
+}
+
+.products-loader {
+  width: 32px;
+  height: 32px;
+
+  border: 3px solid #e5e5e5;
+  border-top-color: #111;
+  border-radius: 50%;
+
+  animation: products-spin 0.8s linear infinite;
+}
+
+@keyframes products-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.products-state-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ddd;
+  border-radius: 50%;
+
+  color: #555;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.products-error {
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 40px 20px;
+}
+
+.products-empty {
+  border: 1px dashed #ddd;
+  border-radius: 12px;
+  padding: 40px 20px;
+}
+
+.products-retry-button {
+  margin-top: 20px;
+
+  padding: 10px 18px;
+
+  border: 1px solid #111;
+  border-radius: 7px;
+
+  background: #111;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.products-retry-button:hover {
+  background: #333;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  margin-top: 36px;
+}
+
+.pagination-button {
+  min-width: 92px;
+
+  padding: 9px 15px;
+
+  border: 1px solid #d8d8d8;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #222;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+.pagination-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  min-width: 120px;
+
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+.pagination-info strong {
+  color: #222;
+}
+
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .products-page {
+    padding: 32px 16px 48px;
+  }
+
+  .products-header {
+    margin-bottom: 22px;
+  }
+
+  .products-header h1 {
+    font-size: 29px;
+  }
+
+  .products-subtitle {
+    font-size: 14px;
+  }
+
+  .product-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .product-filters .search-bar,
+  .product-filters .category-filter {
+    width: 100%;
+  }
+
+  .product-filters .category-filter select {
+    width: 100%;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .products-result-info {
+    margin-bottom: 16px;
+  }
+
+  .pagination {
+    gap: 10px;
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 400px) {
+  .products-header h1 {
+    font-size: 26px;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+
+  .pagination-button {
+    min-width: 80px;
+    padding: 8px 10px;
+  }
+
+  .pagination-info {
+    min-width: auto;
+  }
+}

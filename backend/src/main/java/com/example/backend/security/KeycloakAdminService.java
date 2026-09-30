@@ -4,7 +4,11 @@ import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import jakarta.ws.rs.core.Response;
 
@@ -12,83 +16,126 @@ import jakarta.ws.rs.core.Response;
 public class KeycloakAdminService {
 
   private final Keycloak keycloak;
+  private final String realm;
 
-  public KeycloakAdminService(Keycloak keycloak) {
+  public KeycloakAdminService(
+      Keycloak keycloak,
+      @Value("${keycloak.realm}") String realm) {
+
     this.keycloak = keycloak;
+    this.realm = realm;
   }
 
   public void testConnection() {
-    keycloak.realm("ecommerce")
+
+    keycloak
+        .realm(realm)
         .users()
         .count();
   }
 
+  // Create + delete user
+
   public String createUser(
-            String username,
-            String email,
-            String password) {
+      String username,
+      String email,
+      String password) {
 
-        UserRepresentation user = new UserRepresentation();
+    UserRepresentation user = new UserRepresentation();
 
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setEnabled(true);
+    user.setUsername(username);
+    user.setEmail(email);
+    user.setEnabled(true);
 
-        CredentialRepresentation credential =
-                new CredentialRepresentation();
+    CredentialRepresentation credential = new CredentialRepresentation();
 
-        credential.setType(OAuth2Constants.PASSWORD);
-        credential.setValue(password);
-        credential.setTemporary(false);
+    credential.setType(OAuth2Constants.PASSWORD);
+    credential.setValue(password);
+    credential.setTemporary(false);
 
-        user.setCredentials(
-                java.util.List.of(credential)
-        );
+    user.setCredentials(
+        List.of(credential));
 
-        Response response = keycloak
-                .realm("ecommerce")
-                .users()
-                .create(user);
+    Response response = keycloak
+        .realm(realm)
+        .users()
+        .create(user);
 
-        if (response.getStatus() != 201) {
-            throw new RuntimeException(
-                    "Failed to create Keycloak user. Status: "
-                    + response.getStatus()
-            );
-        }
+    if (response.getStatus() != 201) {
 
-        String location =
-                response.getHeaderString("Location");
+      int status = response.getStatus();
 
-        response.close();
+      response.close();
 
-        return location.substring(
-                location.lastIndexOf("/") + 1
-        );
+      throw new RuntimeException(
+          "Failed to create Keycloak user. Status: "
+              + status);
     }
 
-    public void assignRealmRole(String userId, String roleName) {
+    String location = response.getHeaderString("Location");
 
-      var role = keycloak
-          .realm("ecommerce")
-          .roles()
-          .get(roleName)
-          .toRepresentation();
+    response.close();
 
-      keycloak
-          .realm("ecommerce")
-          .users()
-          .get(userId)
-          .roles()
-          .realmLevel()
-          .add(java.util.List.of(role));
+    /*
+     * Keycloak should return the created user's
+     * location. We need it to extract the user ID.
+     */
+    if (location == null || location.isBlank()) {
+
+      throw new RuntimeException(
+          "Keycloak user was created but "
+              + "user ID could not be determined");
     }
 
-    public void deleteUser(String userId) {
+    return location.substring(
+        location.lastIndexOf("/") + 1);
+  }
 
-      keycloak
-          .realm("ecommerce")
-          .users()
-          .delete(userId);
-    }
+  public void deleteUser(String userId) {
+
+    keycloak
+        .realm(realm)
+        .users()
+        .delete(userId);
+  }
+
+  // Add + remove role from user
+
+  public void assignRealmRole(
+      String userId,
+      String roleName) {
+
+    var role = keycloak
+        .realm(realm)
+        .roles()
+        .get(roleName)
+        .toRepresentation();
+
+    keycloak
+        .realm(realm)
+        .users()
+        .get(userId)
+        .roles()
+        .realmLevel()
+        .add(List.of(role));
+  }
+
+  public void removeRealmRole(
+      String userId,
+      String roleName) {
+
+    var role = keycloak
+        .realm(realm)
+        .roles()
+        .get(roleName)
+        .toRepresentation();
+
+    keycloak
+        .realm(realm)
+        .users()
+        .get(userId)
+        .roles()
+        .realmLevel()
+        .remove(List.of(role));
+  }
 }

@@ -4,11 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.entity.Product;
-import com.example.backend.repository.ProductRepository;
 import com.example.backend.dto.product.ProductResponse;
-
+import com.example.backend.entity.Product;
 import com.example.backend.exception.ResourceNotFoundException;
+import com.example.backend.repository.ProductRepository;
 
 @Service
 public class PublicProductService {
@@ -32,28 +31,27 @@ public class PublicProductService {
 
     if (hasSearch && hasCategory) {
 
-      products = productRepository.searchByCategoryName(
+      products = productRepository.searchActiveProductsByCategory(
           category,
           search,
           pageable);
 
     } else if (hasSearch) {
 
-      products = productRepository
-          .findByNameContainingIgnoreCase(
-              search,
-              pageable);
+      products = productRepository.findActiveProductsByName(
+          search,
+          pageable);
 
     } else if (hasCategory) {
 
-      products = productRepository
-          .findByCategory_NameIgnoreCase(
-              category,
-              pageable);
+      products = productRepository.findActiveProductsByCategory(
+          category,
+          pageable);
 
     } else {
 
-      products = productRepository.findAll(pageable);
+      products = productRepository.findActiveProducts(
+          pageable);
     }
 
     return products.map(this::mapToResponse);
@@ -61,9 +59,10 @@ public class PublicProductService {
 
   public ProductResponse getProduct(Long productId) {
 
-    Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-
+    Product product = productRepository
+        .findActiveById(productId)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "Product not found"));
 
     return mapToResponse(product);
   }
@@ -76,6 +75,7 @@ public class PublicProductService {
         product.getDescription(),
         product.getPrice(),
         product.getQuantity(),
+        product.isActive(),
         product.getCategory().getId(),
         product.getCategory().getName(),
         product.getTenant().getName());

@@ -1,0 +1,386 @@
+.tenant-products-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.tenant-products-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.tenant-products-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.tenant-products-back-link:hover {
+  color: #111;
+}
+
+.tenant-products-back-link svg {
+  font-size: 11px;
+}
+
+.tenant-products-eyebrow {
+  margin: 0 0 8px;
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.tenant-products-header h1 {
+  margin: 0;
+  color: #111;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.tenant-products-header p:last-child {
+  margin: 10px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-products-header p strong {
+  color: #333;
+}
+
+.tenant-products-add-button,
+.tenant-products-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 7px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.tenant-products-add-button:hover,
+.tenant-products-primary-button:hover {
+  background: #333;
+}
+
+.tenant-products-add-button svg,
+.tenant-products-primary-button svg {
+  font-size: 12px;
+}
+
+.tenant-products-result-info {
+  margin-bottom: 14px;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-products-inline-error {
+  margin-bottom: 18px;
+  padding: 11px 14px;
+  border: 1px solid #f0d0d0;
+  border-radius: 7px;
+  background: #fff7f7;
+  color: #b3261e;
+  font-size: 14px;
+}
+
+.tenant-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tenant-product-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 22px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #fff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tenant-product-card:hover {
+  border-color: #d5d5d5;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+}
+
+.tenant-product-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.tenant-product-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 9px;
+  background: #fafafa;
+  color: #444;
+}
+
+.tenant-product-icon svg {
+  font-size: 16px;
+}
+
+.tenant-product-info {
+  min-width: 0;
+}
+
+.tenant-product-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tenant-product-heading h2 {
+  margin: 0;
+  color: #222;
+  font-size: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tenant-product-category {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.tenant-product-description {
+  max-width: 500px;
+  margin: 7px 0 0;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tenant-product-stock {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tenant-product-stock-available {
+  background: #f1f8f3;
+  color: #287a45;
+}
+
+.tenant-product-stock-out {
+  background: #fff3f3;
+  color: #c62828;
+}
+
+.tenant-product-price {
+  color: #111;
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tenant-product-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tenant-product-edit-button,
+.tenant-product-delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.tenant-product-edit-button {
+  border: 1px solid #222;
+  background: #111;
+  color: #fff;
+}
+
+.tenant-product-edit-button:hover {
+  background: #333;
+}
+
+.tenant-product-delete-button {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #666;
+}
+
+.tenant-product-delete-button:hover:not(:disabled) {
+  border-color: #e0baba;
+  background: #fff7f7;
+  color: #c62828;
+}
+
+.tenant-product-delete-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tenant-product-actions svg {
+  font-size: 10px;
+}
+
+.tenant-products-empty,
+.tenant-products-state {
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  border: 1px dashed #ddd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.tenant-products-empty-icon,
+.tenant-products-state-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: #555;
+}
+
+.tenant-products-empty h2,
+.tenant-products-state h2 {
+  margin: 14px 0 0;
+  color: #222;
+  font-size: 21px;
+}
+
+.tenant-products-empty p,
+.tenant-products-state p {
+  margin: 9px 0 20px;
+  color: #777;
+  font-size: 14px;
+}
+
+.tenant-products-loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e5e5;
+  border-top-color: #111;
+  border-radius: 50%;
+  animation: tenant-products-spin 0.8s linear infinite;
+}
+
+@keyframes tenant-products-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 850px) {
+  .tenant-product-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .tenant-product-price {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .tenant-product-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .tenant-products-page {
+    padding: 32px 16px 48px;
+  }
+
+  .tenant-products-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tenant-products-add-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tenant-product-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tenant-product-price {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .tenant-product-actions {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .tenant-product-edit-button,
+  .tenant-product-delete-button {
+    flex: 1;
+  }
+
+  .tenant-product-description {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 420px) {
+  .tenant-product-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tenant-product-heading h2 {
+    white-space: normal;
+  }
+}

@@ -25,7 +25,6 @@ import com.example.backend.repository.OrderRepository;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.CurrentUserService;
 
-
 @Service
 public class OrderService {
 
@@ -43,43 +42,60 @@ public class OrderService {
     this.currentUserService = currentUserService;
   }
 
+  //create -> duplicates check
+  // -> item quantity and concurrency check
+  // -> also saves historical price
   @Transactional
-  public OrderResponse createOrder(CreateOrderRequest request) {
+  public OrderResponse createOrder(
+      CreateOrderRequest request) {
 
     User user = currentUserService.getCurrentUser();
 
+
+    // Prevent the same product from appearing multiple times in a single order.
     Set<Long> productIds = new HashSet<>();
 
     for (OrderItemRequest itemRequest : request.getItems()) {
 
-        if (!productIds.add(itemRequest.getProductId())) {
-            throw new ResourceAlreadyExistsException(
-                "Product appears more than once in the order: "
-                + itemRequest.getProductId()
-            );
-        }
+      if (!productIds.add(itemRequest.getProductId())) {
+
+        throw new ResourceAlreadyExistsException(
+            "Product appears more than once in the order: "
+                + itemRequest.getProductId());
+      }
     }
 
     Order order = new Order();
+
     order.setUser(user);
     order.setOrderDate(LocalDateTime.now());
 
     List<OrderItem> orderItems = new ArrayList<>();
 
     int totalQuantity = 0;
+
     BigDecimal totalAmount = BigDecimal.ZERO;
 
     for (OrderItemRequest itemRequest : request.getItems()) {
 
+
+        // Pessimistic lock + active product/tenant check
+        // -> stock check then stock change then only continues
+
       Product product = productRepository
-          .findByIdForUpdate(itemRequest.getProductId())
+          .findActiveByIdForUpdate(
+              itemRequest.getProductId())
           .orElseThrow(() -> new ResourceNotFoundException(
-              "Product not found: " + itemRequest.getProductId()));
+              "Product not found or is no longer available: "
+                  + itemRequest.getProductId()));
 
       int requestedQuantity = itemRequest.getQuantity();
+
       int availableQuantity = product.getQuantity();
 
+
       if (requestedQuantity >= availableQuantity) {
+
         throw new InsufficientStockException(
             "Requested quantity must be less than available quantity for product: "
                 + product.getName());
@@ -91,15 +107,21 @@ public class OrderService {
       orderItem.setProduct(product);
       orderItem.setQuantity(requestedQuantity);
 
+      // capture price at purchase time.
       BigDecimal price = product.getPrice();
+
       orderItem.setPrice(price);
 
-      BigDecimal subtotal = price.multiply(BigDecimal.valueOf(requestedQuantity));
+      BigDecimal subtotal = price.multiply(
+          BigDecimal.valueOf(
+              requestedQuantity));
 
       totalQuantity += requestedQuantity;
+
       totalAmount = totalAmount.add(subtotal);
 
-      product.setQuantity(availableQuantity - requestedQuantity);
+      product.setQuantity(
+          availableQuantity - requestedQuantity);
 
       orderItems.add(orderItem);
     }
@@ -113,7 +135,9 @@ public class OrderService {
     return mapToResponse(savedOrder);
   }
 
-  private OrderResponse mapToResponse(Order order) {
+  //mapping function
+  private OrderResponse mapToResponse(
+      Order order) {
 
     List<OrderItemResponse> itemResponses = order.getOrderItems()
         .stream()
@@ -121,7 +145,8 @@ public class OrderService {
 
           BigDecimal subtotal = item.getPrice()
               .multiply(
-                  BigDecimal.valueOf(item.getQuantity()));
+                  BigDecimal.valueOf(
+                      item.getQuantity()));
 
           return new OrderItemResponse(
               item.getProduct().getId(),
@@ -145,19 +170,25 @@ public class OrderService {
 
     User user = currentUserService.getCurrentUser();
 
-    return orderRepository.findByUserOrderByIdDesc(user)
+    return orderRepository
+        .findByUserOrderByIdDesc(user)
         .stream()
         .map(this::mapToResponse)
         .toList();
   }
 
-  //particular order
-  public OrderResponse getMyOrder(Long orderId) {
+  //single order detail
+  public OrderResponse getMyOrder(
+      Long orderId) {
 
     User user = currentUserService.getCurrentUser();
 
-    Order order = orderRepository.findByIdAndUser(orderId, user)
-        .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+    Order order = orderRepository
+        .findByIdAndUser(
+            orderId,
+            user)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "Order not found"));
 
     return mapToResponse(order);
   }

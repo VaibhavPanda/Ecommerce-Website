@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.product.ProductResponse;
 import com.example.backend.service.PublicProductService;
+import com.example.backend.dto.common.PageResponse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,27 +24,33 @@ public class PublicProductController {
   }
 
   @GetMapping
-  public Page<ProductResponse> getProducts(
+  public PageResponse<ProductResponse> getProducts(
       @RequestParam(required = false) String search,
       @RequestParam(required = false) String category,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "20") int size,
       @RequestParam(defaultValue = "id,asc") String[] sort) {
 
-    Sort.Direction direction = sort.length > 1
-        && sort[1].equalsIgnoreCase("desc")
-            ? Sort.Direction.DESC
-            : Sort.Direction.ASC;
+    Sort.Direction direction = sort.length > 1 && sort[1].equalsIgnoreCase("desc")
+        ? Sort.Direction.DESC
+        : Sort.Direction.ASC;
 
     Pageable pageable = PageRequest.of(
         page,
         size,
         Sort.by(direction, sort[0]));
 
-    return publicProductService.getProducts(
+    Page<ProductResponse> products = publicProductService.getProducts(
         search,
         category,
         pageable);
+
+    return new PageResponse<>(
+        products.getContent(),
+        products.getNumber(),
+        products.getSize(),
+        products.getTotalElements(),
+        products.getTotalPages());
   }
 
   @GetMapping("/{productId}")

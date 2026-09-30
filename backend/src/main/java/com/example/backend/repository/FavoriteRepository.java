@@ -1,19 +1,39 @@
 package com.example.backend.repository;
 
-import com.example.backend.entity.Favorite;
-import com.example.backend.entity.Product;
-import com.example.backend.entity.User;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
+import com.example.backend.entity.Favorite;
+import com.example.backend.entity.Product;
+import com.example.backend.entity.User;
 
-  boolean existsByUserAndProduct(User user, Product product);
+public interface FavoriteRepository
+    extends JpaRepository<Favorite, Long> {
 
-  Optional<Favorite> findByUserAndProduct(User user, Product product);
+  //check
+  boolean existsByUserAndProduct(
+      User user,
+      Product product);
 
-  List<Favorite> findByUserOrderByIdDesc(User user);
+  //find
+  Optional<Favorite> findByUserAndProduct(
+      User user,
+      Product product);
+
+      //fetch active products
+  @Query("""
+      SELECT f
+      FROM Favorite f
+      JOIN FETCH f.product p
+      WHERE f.user = :user
+        AND p.isActive = true
+        AND p.tenant.isActive = true
+      ORDER BY f.id DESC
+      """)
+  List<Favorite> findActiveFavoritesByUser(
+      @Param("user") User user);
 }

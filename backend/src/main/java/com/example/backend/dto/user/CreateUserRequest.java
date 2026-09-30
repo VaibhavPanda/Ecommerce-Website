@@ -26,7 +26,6 @@ public class CreateUserRequest {
   @Size(min = 8, message = "Password must contain at least 8 characters")
   private String password;
 
-  @NotBlank(message = "Tenant domain is required")
   private String tenantDomain;
 
   @NotBlank(message = "Role is required")
